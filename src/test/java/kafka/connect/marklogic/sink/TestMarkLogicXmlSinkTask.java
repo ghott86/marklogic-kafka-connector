@@ -29,7 +29,7 @@ public class TestMarkLogicXmlSinkTask extends AbstractTest{
 	private MarkLogicSinkTask markLogicSinkTask;
 	
 	@Before
-	public void setup(){
+	public void setup() throws IOException {
 	    super.setup();
 		markLogicSinkTask = new MarkLogicSinkTask();
         Map<String, String> conf = super.conf;

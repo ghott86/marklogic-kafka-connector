@@ -29,7 +29,7 @@ public class TestMarkLogicXmlWriter extends AbstractTest{
     private Writer writer;
     
     @Before
-    public void setup(){
+    public void setup() throws IOException {
         super.setup();
         writer = new MarkLogicXmlWriter(super.conf);
     }
