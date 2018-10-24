@@ -1,6 +1,9 @@
 # Credit
 
-This project is a combination of Sanju Thomas' original Kafka MarkLogic Sync Connector (https://github.com/sanjuthomas/kafka-connect-marklogic) and Bill Farber's XML processing additions to the connector (https://github.com/BillFarber/kafka-mbo) with my own additions and documentation.
+This project is a combination of the following:
+* Sanju Thomas' original Kafka MarkLogic Sync Connector (https://github.com/sanjuthomas/kafka-connect-marklogic)
+* Bill Farber's XML processing additions to the connector (https://github.com/BillFarber/kafka-mbo)
+* My own additions and documentation sprinkled in (see commit history)
 
 # Overview
 
