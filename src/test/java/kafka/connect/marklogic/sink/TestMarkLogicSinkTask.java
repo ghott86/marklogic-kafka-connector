@@ -19,7 +19,6 @@ import org.apache.kafka.connect.sink.SinkRecord;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * 
  * @author Sanju Thomas
