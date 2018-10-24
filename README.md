@@ -1,6 +1,10 @@
+# Credit
+
+This project is a combination of Sanju Thomas' original Kafka MarkLogic Sync Connector (https://github.com/sanjuthomas/kafka-connect-marklogic) and Bill Farber's XML processing additions to the connector (https://github.com/BillFarber/kafka-mbo) with my own additions and documentation.
+
 # Overview
 
-Kafka Connect MarkLogic is a sink only connector to pull messages from Kafka to store in MarkLogic as JSON documents. Consider using Kafka MarkLogic Sync Connector for the following usecases.
+Kafka Connect MarkLogic is a sink only connector to pull messages from Kafka to store in MarkLogic as JSON  and XML documents. Consider using Kafka MarkLogic Sync Connector for the following usecases.
 
 1. Near realtime ingestion requirements.
 2. Regulate the traffic towards MarkLogic.
@@ -81,24 +85,6 @@ Open a shell prompt, move to kafka_home and execute the following.
 bin/connect-distributed.sh config/marklogic-connect-distributed.properties config/marklogic-sink.properties
 ```
 
-## How to produce some messages?
-
-A couple of example message producers are available [here](https://github.com/sanjuthomas/marklogic-kafka-sample-client).
-
-## Contact
-
-Create an issue in the GitHub.
-
-## Contribute
-
-Please refer to [CONTRIBUTING.md](https://github.com/sanjuthomas/kafka-connect-marklogic/blob/master/CONTRIBUTING.md)
-
 ## License
 The project is licensed under the MIT license.
-
-## Looking for a connector that supports XML messages?
-
-Drop me a line - ml@sanju.org
-
-
 
