@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>kafka.connect</groupId>
-    <artifactId>kafka-connect-marklogic</artifactId>
+    <artifactId>marklogic-kafka-connector</artifactId>
     <version>2.0</version>
     <packaging>jar</packaging>
 
-    <name>kafka-connect-marklogic</name>
+    <name>marklogic-kafka-connector</name>
     <url>http://sanjuthomas.com</url>
     <description>A Kafka connector for copying data between MarkLogic and Kafka.</description>
 
