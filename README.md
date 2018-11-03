@@ -95,7 +95,7 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Open a new terminal on the VM and execute the following command to see the IPv4 addresses
   * ```ifconfig -a```
 * You can disable the entire firewall by running the following commands
-* __NOTE:__ This is not recommended unless you have an additional firewall protecting your network or server
+* __NOTE:__ This is not recommended unless you have an additional firewall protecting your network and/or server
   * ```systemctl stop firewalld```
   * ```systemctl disable firewalld```
 * Check to see if any sources currently exist
@@ -189,36 +189,37 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * If needed, update the ZooKeeper configuration by editing the properties file
   * ```vi $KAFKA_HOME/config/zookeeper.properties```
 * Start ZooKeeper by running the following command
-  * Note: it is recommended to run this command in its own terminal window to allow monitoring of the ZooKeeper log; otherwise, add “&” to the end of the command below
+  * __NOTE:__ it is recommended to run this command in its own terminal window to allow monitoring of the ZooKeeper log; otherwise, add “&” to the end of the command below
   * ```$KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties```
 
 # Kafka Configuration and Startup 
-* NOTE: This is for a 3 broker cluster
+* __NOTE:__ This is for a 3 broker cluster; note that each new broker configuration increments the broker id, port, and log directory
 * Update the Kafka configuration by editing the properties file
-♣	# vi $KAFKA_HOME/config/server.properties
-♣	Edit/update/verify the file has the following (or update per your environment):
-•	Line 21:  broker.id=0
-•	Line 31 (Uncomment):  listeners=PLAINTEXT://localhost:9092
-•	Line 60:  log.dirs=/tmp/kafka-logs-0
-o	Create an additional broker configuration by executing the following:
-♣	# cp $KAFKA_HOME/config/server.properties $KAFKA_HOME/config/server-1.properties
-♣	# vi $KAFKA_HOME/config/server-1.properties
-♣	Edit/update/verify the file has the following (or update per your environment):
-•	Line 21:  broker.id=1
-•	Line 31 (Uncomment):  listeners=PLAINTEXT://localhost:9093
-•	Line 60:  log.dirs=/tmp/kafka-logs-1
-o	Create an additional broker configuration by executing the following:
-♣	# cp $KAFKA_HOME/config/server.properties $KAFKA_HOME/config/server-2.properties
-♣	# vi $KAFKA_HOME/config/server-2.properties
-♣	Edit/update/verify the file has the following (or update per your environment):
-•	Line 21:  broker.id=2
-•	Line 31 (Uncomment):  listeners=PLAINTEXT://localhost:9094
-•	Line 60:  log.dirs=/tmp/kafka-logs-2
-o	Start the three Kafka brokers by running the following commands:
-♣	Note: it is recommended to run each command in its own terminal window to allow monitoring of the Kafka log; otherwise, add “&” to the end of the command below
-♣	# $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
-♣	# $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server-1.properties
-♣	# $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server-2.properties
+  * ```vi $KAFKA_HOME/config/server.properties```
+  * Edit/update/verify the file has the following (or update per your environment):
+    * Line 21: ```broker.id=0```
+    * Line 31 (Uncomment): ```listeners=PLAINTEXT://localhost:9092```
+    * Line 60: ```log.dirs=/tmp/kafka-logs-0```
+* Create an additional broker configuration by executing the following:
+  * ```cp $KAFKA_HOME/config/server.properties $KAFKA_HOME/config/server-1.properties```
+  * ```vi $KAFKA_HOME/config/server-1.properties```
+  * Edit/update/verify the file has the following (or update per your environment):
+    * Line 21: ```broker.id=1```
+    * Line 31 (Uncomment): ```listeners=PLAINTEXT://localhost:9093```
+    * Line 60: ```log.dirs=/tmp/kafka-logs-1```
+* Create an additional broker configuration by executing the following:
+  * ```cp $KAFKA_HOME/config/server.properties $KAFKA_HOME/config/server-2.properties```
+  * ```vi $KAFKA_HOME/config/server-2.properties```
+  * Edit/update/verify the file has the following (or update per your environment):
+    * Line 21: ```broker.id=2```
+    * Line 31 (Uncomment): ```listeners=PLAINTEXT://localhost:9094```
+    * Line 60: ```log.dirs=/tmp/kafka-logs-2```
+* Start the three Kafka brokers by running the following commands:
+  * __NOTE:__ it is recommended to run each command in its own terminal window to allow monitoring of the Kafka log; otherwise, add “&” to the end of the command below
+  * ```$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties```
+  * ```$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server-1.properties```
+  * ```$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server-2.properties```
+
 14.	Unpack the MarkLogic Kafka Connector archive
 o	Open a new terminal on the VM and change directory to where the software in step 6 was transferred
 o	Move the MarkLogic Kafka Connector file to /opt and untar it:
@@ -255,7 +256,7 @@ o	Copy the marklogic-kafka-connector configuration files and deploy the JAR
 ♣	# cp $ML_CONNECT_HOME/config/* $KAFKA_HOME/config/
 ♣	# cp $ML_CONNECT_HOME/target/marklogic-kafka-connector-2.0.jar $KAFKA_HOME/libs/
 o	Start the marklogic-kafka-connector consumers
-♣	Note: it is recommended to run each command in its own terminal window to allow monitoring of the log; otherwise, add “&” to the end of the command below
+♣	__NOTE:__ it is recommended to run each command in its own terminal window to allow monitoring of the log; otherwise, add “&” to the end of the command below
 ♣	# $KAFKA_HOME/bin/connect-standalone.sh $KAFKA_HOME/config/marklogic-json-connect-standalone.properties $KAFKA_HOME/config/marklogic-json-sink.properties
 ♣	# $KAFKA_HOME/bin/connect-standalone.sh $KAFKA_HOME/config/marklogic-xml-connect-standalone.properties $KAFKA_HOME/config/marklogic-xml-sink.properties
 16.	Create a topic, send some messages, and start a consumer
