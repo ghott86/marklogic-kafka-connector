@@ -1,12 +1,10 @@
 # Credit
-
 This project is a combination of the following:
 * Sanju Thomas' original Kafka MarkLogic Sync Connector (https://github.com/sanjuthomas/kafka-connect-marklogic)
 * Bill Farber's XML processing additions to the connector (https://github.com/BillFarber/kafka-mbo)
 * My own additions and documentation sprinkled in (see commit history)
 
 # Overview
-
 This repository and documentation is meant to be a comprehensive and detailed tutorial to enable novice CentOS, MarkLogic, and/or Apache Kafka users to complete the following:
 * Install, create, and configure a new CentOS 7 virtual machine
 * Install and configure the  prerequisite software
@@ -24,38 +22,40 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Download [Apache Kafka (2.0.0) Binary (Scala 2.11)](https://kafka.apache.org/downloads)
 * GIT clone this repository – [marklogic-kafka-connector](https://github.com/ghott86/marklogic-kafka-connector.git)
 
-3.	Create a CentOS 7 virtual machine (update names, settings, etc. accordingly)
-o	Start up the Virtual Box application
-o	Click New (top left)
-♣	Specify an appropriate name: Kafka_MBO
-♣	Type: Linux
-♣	Version: Linux 2.6 / 3.x / 4.x (64-bit)
-♣	Memory size: 4096 MB
-♣	Hard disk: Create a virtual hard disk now
-♣	Click Create
-o	HDD Setup
-♣	File location: Kafka_MBO
-♣	File size: 40 GB
-♣	Hard disk file type: VDI (VirtualBox Disk Image)
-♣	Storage on physical hard disk: Dynamically allocated
-♣	Click Create
-o	Highlight the VM you just created in the VM list (Kafka_MBO) and Click Settings (top left)
-♣	Click the System button at the top and click the Processor button below that
-•	Set Processors to: 2
-♣	Click the Network button at the top
-•	Set Adapter 1 as follows:
-o	Enable Network Adapter: checked
-o	Attached to: NAT
-o	Adapter type: Intel PRO/1000 MT Desktop
-o	Cable connected: checked
-•	Set Adapter 2 as follows:
-o	Enable Network Adapter: checked
-o	Attached to: Bridged Adapter
-o	Name: en0: Wi-Fi AirPort
-o	Adapter type: Intel PRO/1000 MT Desktop
-o	Promiscuous mode: Allow All
-o	Cable connected: checked
-♣	Click OK to save the settings
+# Create CentOS 7 Virtual Machine 
+* NOTE: Update names, settings, etc. accordingly
+* Start up the Virtual Box application
+* Click New (top left)
+** Specify an appropriate name: Kafka_MBO
+** Type: Linux
+** Version: Linux 2.6 / 3.x / 4.x (64-bit)
+** Memory size: 4096 MB
+** Hard disk: Create a virtual hard disk now
+** Click Create
+* HDD Setup
+** File location: Kafka_MBO
+** File size: 40 GB
+** Hard disk file type: VDI (VirtualBox Disk Image)
+** Storage on physical hard disk: Dynamically allocated
+** Click Create
+* Highlight the VM you just created in the VM list (Kafka_MBO) and Click Settings (top left)
+** Click the System button at the top and click the Processor button below that
+*** Set Processors to: 2
+** Click the Network button at the top
+*** Set Adapter 1 as follows:
+**** Enable Network Adapter: checked
+**** Attached to: NAT
+**** Adapter type: Intel PRO/1000 MT Desktop
+**** Cable connected: checked
+*** Set Adapter 2 as follows:
+**** Enable Network Adapter: checked
+**** Attached to: Bridged Adapter
+**** Name: en0: Wi-Fi AirPort
+**** Adapter type: Intel PRO/1000 MT Desktop
+**** Promiscuous mode: Allow All
+**** Cable connected: checked
+** Click OK to save the settings
+
 4.	Start VM and Install CentOS 7
 o	Click the Start button at the top left and select Normal Start
 o	Click the small folder button to the left of the dialog box and navigate to the directory where the CentOS 7 DVD ISO that was downloaded earlier is stored
