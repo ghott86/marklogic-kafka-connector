@@ -184,7 +184,7 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Set the __$KAFKA_HOME__ variable:
   * ```export KAFKA_HOME=/opt/kafka_2.11-2.0.0```
 
-# 11.) ZooKeeper configuration and startup
+# 11.) ZooKeeper Configuration and Startup
 * Kafka includes a script to get a quick and dirty single node instance of ZooKeeper up and running
 * If needed, update the ZooKeeper configuration by editing the properties file
   * ```vi $KAFKA_HOME/config/zookeeper.properties```
@@ -220,60 +220,60 @@ This repository and documentation is meant to be a comprehensive and detailed tu
   * ```$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server-1.properties```
   * ```$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server-2.properties```
 
-# 13.) Unpack the MarkLogic Kafka Connector archive
+# 13.) Unpack MarkLogic Kafka Connector
 * Open a new terminal on the VM and change directory to where the software in step 5 was transferred
 * Move the MarkLogic Kafka Connector file to /opt and untar it:
   * ```mv marklogic-kafka-connector.zip /opt```
   * ```unzip marklogic-kafka-connector.zip```
-o	Set the $ML_CONNECT_HOME variable:
-♣	# export ML_CONNECT_HOME=/opt/marklogic-kafka-connector
+* Set the __$ML_CONNECTOR_HOME__ variable:
+  * ```export ML_CONNECTOR_HOME=/opt/marklogic-kafka-connector```
 
-# 14.) MarkLogic Kafka Connector configuration, build, and deployment
+# 14.) MarkLogic Kafka Connector Configuration, Build, and Deployment
 * Update the MarkLogic Kafka Connector configuration by editing the properties files:
-♣	# vi $ML_CONNECT_HOME/config/marklogic-json-sink.properties
-•	Edit/update/verify the file has the following (or update per your environment):
-o	Line 6:   topics=json-test
-o	Line 14:  localhost
-o	Line 15:  8000
-o	Line 16:  admin
-o	Line 17:  password
-♣	# vi $ML_CONNECT_HOME/config/marklogic-xml-sink.properties
-•	Edit/update/verify the file has the following (or update per your environment):
-o	Line 6:   topics=xml-test
-o	Line 14:  localhost
-o	Line 15:  8000
-o	Line 16:  admin
-o	Line 17:  password
-♣	# vi $ML_CONNECT_HOME/config/marklogic-json-connect-standalone.properties
-•	Update line 17 so it looks like the following:
-o	bootstrap.servers=localhost:9092,localhost:9093,localhost:9094
-♣	# vi $ML_CONNECT_HOME/config/marklogic-xml-connect-standalone.properties
-•	Update line 17 so it looks like the following:
-o	bootstrap.servers=localhost:9092,localhost:9093,localhost:9094
-o	Build the marklogic-kafka-connector project with maven
-♣	# cd $ML_CONNECT_HOME
-♣	# mvn clean compile package shade:shade install
-o	Copy the marklogic-kafka-connector configuration files and deploy the JAR
-♣	# cp $ML_CONNECT_HOME/config/* $KAFKA_HOME/config/
-♣	# cp $ML_CONNECT_HOME/target/marklogic-kafka-connector-2.0.jar $KAFKA_HOME/libs/
-o	Start the marklogic-kafka-connector consumers
-♣	__NOTE:__ It is recommended to run each command in its own terminal window to allow monitoring of the log; otherwise, add “&” to the end of the command below
-♣	# $KAFKA_HOME/bin/connect-standalone.sh $KAFKA_HOME/config/marklogic-json-connect-standalone.properties $KAFKA_HOME/config/marklogic-json-sink.properties
-♣	# $KAFKA_HOME/bin/connect-standalone.sh $KAFKA_HOME/config/marklogic-xml-connect-standalone.properties $KAFKA_HOME/config/marklogic-xml-sink.properties
+  * ```vi $ML_CONNECTOR_HOME/config/marklogic-json-sink.properties```
+    * Edit/update/verify the file has the following (or update per your environment):
+      * Line 6:  ```topics=json-test```
+      * Line 14: ```localhost```
+      * Line 15: ```8000```
+      * Line 16: ```admin```
+      * Line 17: ```password```
+  * ```vi $ML_CONNECTOR_HOME/config/marklogic-xml-sink.properties```
+    * Edit/update/verify the file has the following (or update per your environment):
+      * Line 6:  ```topics=xml-test```
+      * Line 14: ```localhost```
+      * Line 15: ```8000```
+      * Line 16: ```admin```
+      * Line 17: ```password```
+  * ```vi $ML_CONNECTOR_HOME/config/marklogic-json-connect-standalone.properties```
+    * Update line 17 so it looks like the following:
+      * ```bootstrap.servers=localhost:9092,localhost:9093,localhost:9094```
+  * ```vi $ML_CONNECTOR_HOME/config/marklogic-xml-connect-standalone.properties```
+    * Update line 17 so it looks like the following:
+      * ```bootstrap.servers=localhost:9092,localhost:9093,localhost:9094```
+* Build the marklogic-kafka-connector project with maven
+  * ```cd $ML_CONNECTOR_HOME```
+  * ```mvn clean compile package shade:shade install```
+* Copy the marklogic-kafka-connector configuration files and deploy the JAR
+  * ```cp $ML_CONNECTOR_HOME/config/* $KAFKA_HOME/config/```
+  * ```cp $ML_CONNECTOR_HOME/target/marklogic-kafka-connector-2.0.jar $KAFKA_HOME/libs/```
+* Start the marklogic-kafka-connector consumers
+  * __NOTE:__ It is recommended to run each command in its own terminal window to allow monitoring of the log; otherwise, add “&” to the end of the command below
+  * ```$KAFKA_HOME/bin/connect-standalone.sh $KAFKA_HOME/config/marklogic-json-connect-standalone.properties $KAFKA_HOME/config/marklogic-json-sink.properties```
+  * ```$KAFKA_HOME/bin/connect-standalone.sh $KAFKA_HOME/config/marklogic-xml-connect-standalone.properties $KAFKA_HOME/config/marklogic-xml-sink.properties```
 
-# 15.) Create a topic, send some messages, and start a consumer
-* Create a new topic test with 1 partition and 3 replicas:
-♣	# $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic test 
-♣	Make sure we can see that topic when running the --list command:
-•	# $KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181 
-o	Publish some messages
-♣	Kafka comes with a command line client that will take input from a file or from standard input and send it out as messages to the Kafka cluster. By default, each line will be sent as a separate message
-•	# $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
-•	test-message 1
-•	test-message 2
-•	Ctrl-C
+# 15.) Kafka Topic, Producers, and Message Creation
+* Create a new topic __test__ with __1__ partition and __3__ replicas:
+  * ```$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic test```
+  * Make sure we can see that topic when running the __--list__ command:
+    * ```$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181```
+* Publish some messages
+  * Kafka comes with a command line client that will take input from a file or from standard input and send it out as messages to the Kafka cluster. By default, each line will be sent as a separate message
+    * ```$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test```
+    * ```test-message 1```
+    * ```test-message 2```
+    * __Ctrl-C__
 
-# 16.)	
+# 16.) Verify
 
 
 
