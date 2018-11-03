@@ -15,7 +15,7 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Verify the MarkLogic Kafka Connector interface functionality
 
 # Prerequisite Software
-* Download and install [Oracle Virtual Box (5.2.20 r125813)](https://www.virtualbox.org/wiki/Downloads)
+* Download and install [__Oracle Virtual Box__ (5.2.20 r125813)](https://www.virtualbox.org/wiki/Downloads)
 * Download [CentOS 7 DVD ISO (7.5.1804)](https://www.centos.org/download)
 * Download [Java SE Development Kit 64-bit – JDK (8u191) for RHEL/CentOS 7](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * Download (both files) - [MarkLogic (9.0-7) and MarkLogic Converters & Filters for RHEL/CentOS 7](https://developer.marklogic.com/products)
@@ -23,15 +23,15 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * GIT clone this repository – [marklogic-kafka-connector](https://github.com/ghott86/marklogic-kafka-connector.git)
 
 # Create a New Linux Virtual Machine 
-* NOTE: Update names, settings, etc. accordingly
+* __NOTE:__ Update names, settings, etc. accordingly
 * Start up the Virtual Box application
-* Click New (top left)
-  * Specify an appropriate name: Kafka_MBO
-  * Type: Linux
-  * Version: Linux 2.6 / 3.x / 4.x (64-bit)
-  * Memory size: 4096 MB
-  * Hard disk: Create a virtual hard disk now
-  * Click Create
+* Click __New__ (top left)
+  * Specify an appropriate name: __Kafka_MBO__
+  * Type: __Linux__
+  * Version: __Linux 2.6 / 3.x / 4.x (64-bit)__
+  * Memory size: __4096 MB__
+  * Hard disk: __Create a virtual hard disk now__
+  * Click __Create__
 * HDD Setup
   * File location: Kafka_MBO
   * File size: 40 GB
