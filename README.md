@@ -109,80 +109,89 @@ This repository and documentation is meant to be a comprehensive and detailed tu
   * ```firewall-cmd --reload```
   * ```firewall-cmd --zone=public --list-all```
 
-6.	Transfer previously downloaded software
-o	Open a new terminal on the host machine and change directory to where the software in step 2 was downloaded (update IP address and filenames accordingly)
-♣	# scp jdk-8u191-linux-x64.rpm root@192.168.150.53:
-♣	# scp MarkLogic-9.0-7.x86_64.rpm root@192.168.150.53:
-♣	# scp MarkLogicConverters-9.0-7.x86_64.rpm root@192.168.150.53:
-♣	# scp kafka_2.11-2.0.0.tgz root@192.168.150.53:
-o	Zip and transfer the marklogic-kafka-connector project repository
-♣	Open a new terminal on the host machine and change directory to where the marklogic-kafka-connector repository was cloned
-♣	# zip -r marklogic-kafka-connector.zip marklogic-kafka-connector
-♣	# scp marklogic-kafka-connector.zip root@192.168.150.53:
-7.	Install the prerequisite libraries via yum
-o	Open a new terminal on the VM and run the following yum commands
-♣	# yum check-update
-♣	# yum update
-♣	# yum install maven
-♣	# yum install redhat-lsb lsb glibc glibc.i686 gdb
-♣	# yum install libgcc libc.so.6 libgcc.i686 libstdc++ libstdc++.i686
-8.	Install Java
-o	Open a new terminal on the VM and change directory to where the software in step 6 was transferred
-♣	# rpm -Uvh jdk-8u191-linux-x64.rpm
-o	Verify installation
-♣	# java -version
-9.	Install MarkLogic
-o	Open a new terminal on the VM and change directory to where the software in step 6 was transferred
-o	Install MarkLogic and MarkLogic Converters
-♣	# rpm -i MarkLogic-9.0-7.x86_64.rpm
-♣	# rpm -i MarkLogicConverters-9.0-7.x86_64.rpm
-o	Start MarkLogic
-♣	# service MarkLogic start
-o	Configure MarkLogic
-♣	On the host machine, open a new web browser and navigate to: http://192.168.150.53:8001
-♣	Server install: Click OK
-♣	Join a cluster: Click Skip
-♣	Security setup
-•	Admin: admin
-•	Admin Password: password
-•	Realm: public
-•	Wallet Password: password
-•	Encrypt Security Database: unchecked
-•	Click OK
-♣	Enter the admin username/password you defined in the security setup
-10.	OPTIONAL: Kafka background info, how it works, and terminology
-o	Kafka is: a fast, scalable, and distributed publish-subscribe based fault-tolerant messaging system written in Scala and Java
-o	Kafka has: excellent throughput, built-in partitioning, replication, and inherent fault-tolerance
-o	In a publish-subscribe messaging system such as Kafka, messages produced by “publishers” are persisted in a topic and “subscribers” can subscribe to one or more topics and consume all the messages in the topic(s).
-o	Kafka messages are persisted on the disk and replicated within the cluster to prevent data loss. Kafka is built on top of the ZooKeeper synchronization service.
-o	Kafka is a unified platform for handling all the real-time data feeds. Kafka supports low latency message delivery and gives guaranteed fault tolerance in the presence of machine failures. It has the ability to handle a large number of diverse consumers. Kafka is very fast, performs 2 million writes/sec. Kafka persists all data to the disk, which essentially means that all the writes go to the page cache of the OS (RAM). This makes it very efficient to transfer data from page cache to a network socket.
-o	ZooKeeper - Kafka is built on top of the Apache ZooKeeper synchronization service.  ZooKeeper is a critical dependency of Kafka and is utilized as a distributed configuration and synchronization service. It serves as the coordination interface between the Kafka brokers and consumers. The Kafka servers share information via a ZooKeeper cluster. Kafka stores basic metadata in ZooKeeper such as information about topics, brokers, consumer offsets (queue readers) and so on.  ZooKeeper is mainly used to notify producers and consumers about the presence of any new broker (or broker failure) in the Kafka cluster.  Since all the critical information is stored in ZooKeeper and it normally replicates this data across its ensemble, failure of the Kafka broker / ZooKeeper does not affect the state of the Kafka cluster. Kafka will restore the state, once the ZooKeeper restarts. This gives zero downtime for Kafka. The leader election between the Kafka broker is also done by using ZooKeeper in the event of leader failure.
-o	Topics - a stream of messages belonging to a particular category is called a topic. Data is stored in topics. Topics are split into partitions. For each topic, Kafka keeps a minimum of one partition. Each such partition contains messages in an immutable ordered sequence. A partition is implemented as a set of segment files of equal sizes.
-o	Partition - topics may have one or many partitions, so it can handle an arbitrary amount of data. A Kafka partition is a linearly ordered sequence of messages, where each message is identified by their index (called an offset). All the data in a Kafka cluster is the disjointed union of partitions. Incoming messages are written at the end of a partition and messages are sequentially read by consumers.
-o	Partition offset - each partitioned message has a unique sequence id called an offset.
-o	Replicas - nothing but backups of a partition. Replicas are never read or write data. They are used to prevent data loss.
-o	Brokers - simple system(s) responsible for maintaining the published data.  They are stateless, so the use ZooKeeper to maintain their cluster state. Each broker may have zero or more partitions per topic. Kafka clusters typically consist of multiple brokers to maintain load balance. It is recommended to set up broker partitioning in a way to distribute load among the partitions and the brokers.
-o	Kafka cluster - Kafka’s having more than one broker are called a Kafka cluster. A Kafka cluster can be expanded without downtime. These clusters are used to manage the persistence and replication of message data.
-o	Producers - publisher of messages to one or more Kafka topics. Producers send data to Kafka brokers. Every time a producer publishes a message to a broker, the broker simply appends the message to the last segment file. The message will be appended to a partition. Producers can also send messages to a partition of their choice.  When a new broker is added, all producers automatically send a message to that broker.
-o	Consumers - read data from brokers. Consumers subscribes to one or more topics and consume published messages by pulling data from the brokers.  Since Kafka brokers are stateless, this means consumers have to maintain how many messages have been consumed by using partition offset. If the consumer acknowledges a particular message offset, it implies that the consumer has consumed all prior messages. The consumer issues an asynchronous pull request to the broker to have a buffer of bytes ready to consume. The consumers can rewind or skip to any point in a partition simply by supplying an offset value. Consumer offset value is notified by ZooKeeper.
-o	Leader - the node responsible for all reads and writes for the given partition. Every partition has one server acting as a leader.
-o	Follower - node which follows leader instructions. If the leader fails, one of the followers will automatically become the new leader. A follower acts as a normal consumer and pulls messages to update its own data store.
-11.	Unpack the Kafka archive
-o	Open a new terminal on the VM and change directory to where the software in step 6 was transferred
-o	Move the Kafka tar file to /opt and untar it:
-♣	# mv kafka_2.11-2.0.0.tgz /opt
-♣	# tar -xzf kafka_2.11-2.0.0.tgz
-o	Set the $KAFKA_HOME variable:
-♣	# export KAFKA_HOME=/opt/kafka_2.11-2.0.0
-12.	ZooKeeper configuration and startup
-o	Kafka includes a script to get a quick and dirty single node instance of ZooKeeper up and running
-o	If needed, update the ZooKeeper configuration by editing the properties file
-♣	# vi $KAFKA_HOME/config/zookeeper.properties
-o	Start ZooKeeper by running the following command
-♣	Note: it is recommended to run this command in its own terminal window to allow monitoring of the ZooKeeper log; otherwise, add “&” to the end of the command below
-♣	# $KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
-13.	Kafka configuration and startup (3 broker cluster)
-o	Update the Kafka configuration by editing the properties file
+# Transfer Downloaded Software
+* Open a new terminal on the host machine and change directory to where the software in step 2 was downloaded
+* NOTE: Update IP address and filenames accordingly
+  * ```scp jdk-8u191-linux-x64.rpm root@192.168.150.53:```
+  * ```scp MarkLogic-9.0-7.x86_64.rpm root@192.168.150.53:```
+  * ```scp MarkLogicConverters-9.0-7.x86_64.rpm root@192.168.150.53:```
+  * ```scp kafka_2.11-2.0.0.tgz root@192.168.150.53:```
+* Zip and transfer the marklogic-kafka-connector project repository
+  * Open a new terminal on the host machine and change directory to where the marklogic-kafka-connector repository was cloned
+  * ```zip -r marklogic-kafka-connector.zip marklogic-kafka-connector```
+  * ```scp marklogic-kafka-connector.zip root@192.168.150.53:```
+
+# Install Prerequisite Libraries
+* Open a new terminal on the VM and run the following yum commands
+  * ```yum check-update```
+  * ```yum update```
+  * ```yum install maven```
+  * ```yum install redhat-lsb lsb glibc glibc.i686 gdb```
+  * ```yum install libgcc libc.so.6 libgcc.i686 libstdc++ libstdc++.i686```
+
+# Install Java
+* Open a new terminal on the VM and change directory to where the software in step 6 was transferred
+  * ```rpm -Uvh jdk-8u191-linux-x64.rpm```
+* Verify installation
+  * ```java -version```
+
+# Install MarkLogic Server
+* Open a new terminal on the VM and change directory to where the software in step 6 was transferred
+* Install MarkLogic and MarkLogic Converters
+  * ```rpm -i MarkLogic-9.0-7.x86_64.rpm```
+  * ```rpm -i MarkLogicConverters-9.0-7.x86_64.rpm```
+* Start MarkLogic
+  * ```service MarkLogic start```
+* Configure MarkLogic
+  * On the host machine, open a new web browser and navigate to: http://192.168.150.53:8001
+  * Server install: Click OK
+  * Join a cluster: Click Skip
+  * Security setup
+    * Admin: admin
+    * Admin Password: password
+    * Realm: public
+    * Wallet Password: password
+    * Encrypt Security Database: unchecked
+    * Click OK
+  * Enter the admin username/password you defined in the security setup
+
+# OPTIONAL: Kafka Background and Terminology
+* Kafka is: a fast, scalable, and distributed publish-subscribe based fault-tolerant messaging system written in Scala and Java
+* Kafka has: excellent throughput, built-in partitioning, replication, and inherent fault-tolerance
+* In a publish-subscribe messaging system such as Kafka, messages produced by “publishers” are persisted in a topic and “subscribers” can subscribe to one or more topics and consume all the messages in the topic(s).
+* Kafka messages are persisted on the disk and replicated within the cluster to prevent data loss. Kafka is built on top of the ZooKeeper synchronization service.
+* Kafka is a unified platform for handling all the real-time data feeds. Kafka supports low latency message delivery and gives guaranteed fault tolerance in the presence of machine failures. It has the ability to handle a large number of diverse consumers. Kafka is very fast, performs 2 million writes/sec. Kafka persists all data to the disk, which essentially means that all the writes go to the page cache of the OS (RAM). This makes it very efficient to transfer data from page cache to a network socket.
+* ZooKeeper - Kafka is built on top of the Apache ZooKeeper synchronization service.  ZooKeeper is a critical dependency of Kafka and is utilized as a distributed configuration and synchronization service. It serves as the coordination interface between the Kafka brokers and consumers. The Kafka servers share information via a ZooKeeper cluster. Kafka stores basic metadata in ZooKeeper such as information about topics, brokers, consumer offsets (queue readers) and so on.  ZooKeeper is mainly used to notify producers and consumers about the presence of any new broker (or broker failure) in the Kafka cluster.  Since all the critical information is stored in ZooKeeper and it normally replicates this data across its ensemble, failure of the Kafka broker / ZooKeeper does not affect the state of the Kafka cluster. Kafka will restore the state, once the ZooKeeper restarts. This gives zero downtime for Kafka. The leader election between the Kafka broker is also done by using ZooKeeper in the event of leader failure.
+* Topics - a stream of messages belonging to a particular category is called a topic. Data is stored in topics. Topics are split into partitions. For each topic, Kafka keeps a minimum of one partition. Each such partition contains messages in an immutable ordered sequence. A partition is implemented as a set of segment files of equal sizes.
+* Partition - topics may have one or many partitions, so it can handle an arbitrary amount of data. A Kafka partition is a linearly ordered sequence of messages, where each message is identified by their index (called an offset). All the data in a Kafka cluster is the disjointed union of partitions. Incoming messages are written at the end of a partition and messages are sequentially read by consumers.
+* Partition offset - each partitioned message has a unique sequence id called an offset.
+* Replicas - nothing but backups of a partition. Replicas are never read or write data. They are used to prevent data loss.
+* Brokers - simple system(s) responsible for maintaining the published data.  They are stateless, so the use ZooKeeper to maintain their cluster state. Each broker may have zero or more partitions per topic. Kafka clusters typically consist of multiple brokers to maintain load balance. It is recommended to set up broker partitioning in a way to distribute load among the partitions and the brokers.
+* Kafka cluster - Kafka’s having more than one broker are called a Kafka cluster. A Kafka cluster can be expanded without downtime. These clusters are used to manage the persistence and replication of message data.
+* Producers - publisher of messages to one or more Kafka topics. Producers send data to Kafka brokers. Every time a producer publishes a message to a broker, the broker simply appends the message to the last segment file. The message will be appended to a partition. Producers can also send messages to a partition of their choice.  When a new broker is added, all producers automatically send a message to that broker.
+* Consumers - read data from brokers. Consumers subscribes to one or more topics and consume published messages by pulling data from the brokers.  Since Kafka brokers are stateless, this means consumers have to maintain how many messages have been consumed by using partition offset. If the consumer acknowledges a particular message offset, it implies that the consumer has consumed all prior messages. The consumer issues an asynchronous pull request to the broker to have a buffer of bytes ready to consume. The consumers can rewind or skip to any point in a partition simply by supplying an offset value. Consumer offset value is notified by ZooKeeper.
+* Leader - the node responsible for all reads and writes for the given partition. Every partition has one server acting as a leader.
+* Follower - node which follows leader instructions. If the leader fails, one of the followers will automatically become the new leader. A follower acts as a normal consumer and pulls messages to update its own data store.
+
+# Unpack Kafka
+* Open a new terminal on the VM and change directory to where the software in step 6 was transferred
+* Move the Kafka tar file to /opt and untar it:
+  * ```mv kafka_2.11-2.0.0.tgz /opt```
+  * ```tar -xzf kafka_2.11-2.0.0.tgz```
+* Set the $KAFKA_HOME variable:
+  * ```export KAFKA_HOME=/opt/kafka_2.11-2.0.0```
+
+# ZooKeeper configuration and startup
+* Kafka includes a script to get a quick and dirty single node instance of ZooKeeper up and running
+* If needed, update the ZooKeeper configuration by editing the properties file
+  * ```vi $KAFKA_HOME/config/zookeeper.properties```
+* Start ZooKeeper by running the following command
+  * Note: it is recommended to run this command in its own terminal window to allow monitoring of the ZooKeeper log; otherwise, add “&” to the end of the command below
+  * ```$KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties```
+
+# Kafka Configuration and Startup 
+* NOTE: This is for a 3 broker cluster
+* Update the Kafka configuration by editing the properties file
 ♣	# vi $KAFKA_HOME/config/server.properties
 ♣	Edit/update/verify the file has the following (or update per your environment):
 •	Line 21:  broker.id=0
