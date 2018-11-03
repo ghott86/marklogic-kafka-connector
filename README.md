@@ -56,47 +56,48 @@ This repository and documentation is meant to be a comprehensive and detailed tu
       * Cable connected: checked
   * Click OK to save the settings
 
-4.	Start VM and Install CentOS 7
-o	Click the Start button at the top left and select Normal Start
-o	Click the small folder button to the left of the dialog box and navigate to the directory where the CentOS 7 DVD ISO that was downloaded earlier is stored
-o	Select the CentOS 7 DVD ISO file and click Start
-o	On the CentOS 7 boot menu highlight the Install CentOS 7 option and press enter
-o	Configure CentOS 7 install
-♣	Language: English, English (United States)
-♣	Date & Time: Americas/New York time zone (default)
-♣	Keyboard: English (US) (default)
-♣	Language Support: English (United States) (default)
-♣	Installation Source: Local media (default)
-♣	Software selection: Server with GUI
-♣	Installation destination: 
-•	Local standard disks: 40gb ATA VBox HDD
-•	Partitioning: Automatically configure partitioning
-♣	Kdump: enabled (default)
-♣	Network and host name
-•	Select each of the adapters and complete the following
-o	Turn both adapters in the list ON
-o	Configure > General > Automatically connect when available - checked
-o	Configure > IPv6 Settings > Method: Ignore
-♣	Security policy: No profile selected (default)
-♣	Click Begin Installation
-♣	Set root password
-♣	Create a user named: developer
-♣	Set developer password
-♣	Click Reboot once the installation has completed
-♣	License information: check the I accept check box and click Finish Configuration
-♣	Select Not listed? on the “Login” screen and login as root
-♣	Select English on the “Welcome” screen
-♣	Select English (US) on the “Typing” screen
-♣	Turn location services OFF and click Next
-♣	Click Skip on the Connect Accounts screen
-♣	Click the Start using CentOS Linux button
-5.	Configure CentOS Firewall
-o	Open a new terminal on the VM and execute the following command to see the IPv4 addresses
-♣	# ifconfig -a
-o	You can disable the entire firewall by running (not recommended unless you have another firewall protecting your network or server)
-♣	# systemctl stop firewalld
-♣	# systemctl disable firewalld
-o	Check to see if any sources currently exist
+# Start VM and Install CentOS 7
+* Click the Start button at the top left and select Normal Start
+* Click the small folder button to the left of the dialog box and navigate to the directory where the CentOS 7 DVD ISO that was downloaded earlier is stored
+* Select the CentOS 7 DVD ISO file and click Start
+* On the CentOS 7 boot menu highlight the Install CentOS 7 option and press enter
+* Configure CentOS 7 install
+  * Language: English, English (United States)
+  * Date & Time: Americas/New York time zone (default)
+  * Keyboard: English (US) (default)
+  * Language Support: English (United States) (default)
+  * Installation Source: Local media (default)
+  * Software selection: Server with GUI
+  * Installation destination: 
+    * Local standard disks: 40gb ATA VBox HDD
+    * Partitioning: Automatically configure partitioning
+  * Kdump: enabled (default)
+  * Network and host name
+    * Select each of the adapters and complete the following
+      * Turn both adapters in the list ON
+      * Configure > General > Automatically connect when available - checked
+      * Configure > IPv6 Settings > Method: Ignore
+    * Security policy: No profile selected (default)
+    * Click Begin Installation
+    * Set root password
+    * Create a user named: developer
+    * Set developer password
+    * Click Reboot once the installation has completed
+    * License information: check the I accept check box and click Finish Configuration
+    * Select Not listed? on the “Login” screen and login as root
+    * Select English on the “Welcome” screen
+    * Select English (US) on the “Typing” screen
+    * Turn location services OFF and click Next
+    * Click Skip on the Connect Accounts screen
+    * Click the Start using CentOS Linux button
+
+# Configure CentOS Firewall
+* Open a new terminal on the VM and execute the following command to see the IPv4 addresses
+  * # ifconfig -a
+* You can disable the entire firewall by running (not recommended unless you have an additional firewall protecting your network or server)
+  * # systemctl stop firewalld
+  * # systemctl disable firewalld
+* Check to see if any sources currently exist
 ♣	# firewall-cmd --permanent --zone=public --list-sources
 o	Add your current subnet range(s) as a source (update IP addresses accordingly)
 ♣	# firewall-cmd --permanent --zone=public --add-source=10.0.0.0/24
