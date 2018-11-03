@@ -22,7 +22,7 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Download [Apache Kafka (2.0.0) Binary (Scala 2.11)](https://kafka.apache.org/downloads)
 * GIT clone this repository – [marklogic-kafka-connector](https://github.com/ghott86/marklogic-kafka-connector.git)
 
-# Create CentOS 7 Virtual Machine 
+# Create a New Linux Virtual Machine 
 * NOTE: Update names, settings, etc. accordingly
 * Start up the Virtual Box application
 * Click New (top left)
@@ -91,23 +91,24 @@ This repository and documentation is meant to be a comprehensive and detailed tu
     * Click Skip on the Connect Accounts screen
     * Click the Start using CentOS Linux button
 
-# Configure CentOS Firewall
+# Configure CentOS 7 Firewall
 * Open a new terminal on the VM and execute the following command to see the IPv4 addresses
-  * # ifconfig -a
+  * ```ifconfig -a```
 * You can disable the entire firewall by running (not recommended unless you have an additional firewall protecting your network or server)
-  * # systemctl stop firewalld
-  * # systemctl disable firewalld
+  * ```systemctl stop firewalld```
+  * ```systemctl disable firewalld```
 * Check to see if any sources currently exist
-♣	# firewall-cmd --permanent --zone=public --list-sources
-o	Add your current subnet range(s) as a source (update IP addresses accordingly)
-♣	# firewall-cmd --permanent --zone=public --add-source=10.0.0.0/24
-♣	# firewall-cmd --permanent --zone=public --add-source=192.168.150.0/24
-o	Add ports 1 through 9999 for TCP and UDP
-♣	# firewall-cmd --permanent --zone=public --add-port=1-9999/tcp
-♣	# firewall-cmd --permanent --zone=public --add-port=1-9999/udp
-o	Reload the firewall config and check to make sure everything was added
-♣	# firewall-cmd --reload
-♣	# firewall-cmd --zone=public --list-all
+  * ```firewall-cmd --permanent --zone=public --list-sources```
+* Add your current subnet range(s) as a source (update IP addresses accordingly)
+  * ```firewall-cmd --permanent --zone=public --add-source=10.0.0.0/24```
+  * ```firewall-cmd --permanent --zone=public --add-source=192.168.150.0/24```
+* Add ports 1 through 9999 for TCP and UDP
+  * ```firewall-cmd --permanent --zone=public --add-port=1-9999/tcp```
+  * ```firewall-cmd --permanent --zone=public --add-port=1-9999/udp```
+* Reload the firewall config and check to make sure everything was added
+  * ```firewall-cmd --reload```
+  * ```firewall-cmd --zone=public --list-all```
+
 6.	Transfer previously downloaded software
 o	Open a new terminal on the host machine and change directory to where the software in step 2 was downloaded (update IP address and filenames accordingly)
 ♣	# scp jdk-8u191-linux-x64.rpm root@192.168.150.53:
