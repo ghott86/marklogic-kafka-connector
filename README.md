@@ -17,12 +17,12 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Verify the MarkLogic Kafka Connector interface functionality
 
 # Prerequisite Software
-* Download and install Oracle Virtual Box (5.2.20 r125813) - https://www.virtualbox.org/wiki/Downloads
-* Download CentOS 7 DVD ISO (7.5.1804) - https://www.centos.org/download
-* Download Java SE Development Kit 64-bit – JDK (8u191) for RHEL/CentOS 7 - https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-* Download (both files) - MarkLogic (9.0-7) and MarkLogic Converters & Filters for RHEL/CentOS 7 - https://developer.marklogic.com/products
-* Download Apache Kafka (2.0.0) Binary (Scala 2.11) - https://kafka.apache.org/downloads
-* GIT clone this repository – marklogic-kafka-connector - https://github.com/ghott86/marklogic-kafka-connector.git
+* Download and install [Oracle Virtual Box (5.2.20 r125813)](https://www.virtualbox.org/wiki/Downloads)
+* Download [CentOS 7 DVD ISO (7.5.1804)](https://www.centos.org/download)
+* Download [Java SE Development Kit 64-bit – JDK (8u191) for RHEL/CentOS 7](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* Download (both files) - [MarkLogic (9.0-7) and MarkLogic Converters & Filters for RHEL/CentOS 7](https://developer.marklogic.com/products)
+* Download [Apache Kafka (2.0.0) Binary (Scala 2.11)](https://kafka.apache.org/downloads)
+* GIT clone this repository – [marklogic-kafka-connector](https://github.com/ghott86/marklogic-kafka-connector.git)
 
 3.	Create a CentOS 7 virtual machine (update names, settings, etc. accordingly)
 o	Start up the Virtual Box application
