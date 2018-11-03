@@ -16,11 +16,11 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 
 # Prerequisite Software
 * Download and install [__Oracle Virtual Box__ (5.2.20 r125813)](https://www.virtualbox.org/wiki/Downloads)
-* Download [CentOS 7 DVD ISO (7.5.1804)](https://www.centos.org/download)
-* Download [Java SE Development Kit 64-bit – JDK (8u191) for RHEL/CentOS 7](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-* Download (both files) - [MarkLogic (9.0-7) and MarkLogic Converters & Filters for RHEL/CentOS 7](https://developer.marklogic.com/products)
-* Download [Apache Kafka (2.0.0) Binary (Scala 2.11)](https://kafka.apache.org/downloads)
-* GIT clone this repository – [marklogic-kafka-connector](https://github.com/ghott86/marklogic-kafka-connector.git)
+* Download [__CentOS 7__ DVD ISO (7.5.1804)](https://www.centos.org/download)
+* Download [__Java SE Development Kit 64-bit__ – JDK (8u191) for RHEL/CentOS 7](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* Download (both files) - [__MarkLogic__ (9.0-7) and __MarkLogic Converters & Filters__ for RHEL/CentOS 7](https://developer.marklogic.com/products)
+* Download [__Apache Kafka__ (2.0.0) Binary (Scala 2.11)](https://kafka.apache.org/downloads)
+* GIT clone this repository – [__marklogic-kafka-connector__](https://github.com/ghott86/marklogic-kafka-connector.git)
 
 # Create a New Linux Virtual Machine 
 * __NOTE:__ Update names, settings, etc. accordingly
@@ -33,73 +33,75 @@ This repository and documentation is meant to be a comprehensive and detailed tu
   * Hard disk: __Create a virtual hard disk now__
   * Click __Create__
 * HDD Setup
-  * File location: Kafka_MBO
-  * File size: 40 GB
-  * Hard disk file type: VDI (VirtualBox Disk Image)
-  * Storage on physical hard disk: Dynamically allocated
-  * Click Create
-* Highlight the VM you just created in the VM list (Kafka_MBO) and Click Settings (top left)
-  * Click the System button at the top and click the Processor button below that
-    * Set Processors to: 2
-  * Click the Network button at the top
-    * Set Adapter 1 as follows:
-      * Enable Network Adapter: checked
-      * Attached to: NAT
-      * Adapter type: Intel PRO/1000 MT Desktop
-      * Cable connected: checked
-    * Set Adapter 2 as follows:
-      * Enable Network Adapter: checked
-      * Attached to: Bridged Adapter
-      * Name: en0: Wi-Fi AirPort
-      * Adapter type: Intel PRO/1000 MT Desktop
-      * Promiscuous mode: Allow All
-      * Cable connected: checked
-  * Click OK to save the settings
+  * File location: __Kafka_MBO__
+  * File size: __40 GB__
+  * Hard disk file type: __VDI (VirtualBox Disk Image)__
+  * Storage on physical hard disk: __Dynamically allocated__
+  * Click __Create__
+* Highlight the VM you just created in the VM list (Kafka_MBO) and Click __Settings__ (top left)
+  * Click the __System__ button at the top and click the __Processor__ button below that
+    * Set Processors to: __2__
+  * Click the __Network__ button at the top
+    * Set __Adapter 1__ as follows:
+      * Enable Network Adapter: __checked__
+      * Attached to: __NAT__
+      * Adapter type: __Intel PRO/1000 MT Desktop__
+      * Cable connected: __checked__
+    * Set __Adapter 2__ as follows:
+      * Enable Network Adapter: __checked__
+      * Attached to: __Bridged Adapter__
+      * Name: __en0: Wi-Fi AirPort__
+      * Adapter type: __Intel PRO/1000 MT Desktop__
+      * Promiscuous mode: __Allow All__
+      * Cable connected: __checked__
+  * Click __OK__ to save the settings
 
 # Start VM and Install CentOS 7
-* Click the Start button at the top left and select Normal Start
-* Click the small folder button to the left of the dialog box and navigate to the directory where the CentOS 7 DVD ISO that was downloaded earlier is stored
-* Select the CentOS 7 DVD ISO file and click Start
-* On the CentOS 7 boot menu highlight the Install CentOS 7 option and press enter
+* Click the __Start__ button at the top left and select __Normal Start__
+* Click the __small folder button__ to the left of the dialog box and navigate to the directory where the __CentOS 7 DVD ISO file__ that was downloaded earlier is stored
+* Select the __CentOS 7 DVD ISO file__ and click __Start__
+* On the CentOS 7 boot menu highlight the __Install CentOS 7__ option and press __enter__
 * Configure CentOS 7 install
-  * Language: English, English (United States)
-  * Date & Time: Americas/New York time zone (default)
-  * Keyboard: English (US) (default)
-  * Language Support: English (United States) (default)
-  * Installation Source: Local media (default)
-  * Software selection: Server with GUI
+  * Language: __English, English (United States)__
+  * Date & Time: __Americas/New York time zone (default)__
+  * Keyboard: __English (US) (default)__
+  * Language Support: __English (United States) (default)__
+  * Installation Source: __Local media (default)__
+  * Software selection: __Server with GUI__
   * Installation destination: 
-    * Local standard disks: 40gb ATA VBox HDD
-    * Partitioning: Automatically configure partitioning
-  * Kdump: enabled (default)
+    * Local standard disks: __40gb ATA VBox HDD__
+    * Partitioning: __Automatically configure partitioning__
+  * Kdump: __enabled (default)__
   * Network and host name
     * Select each of the adapters and complete the following
-      * Turn both adapters in the list ON
-      * Configure > General > Automatically connect when available - checked
-      * Configure > IPv6 Settings > Method: Ignore
-    * Security policy: No profile selected (default)
-    * Click Begin Installation
+      * Turn both adapters in the list __ON__
+      * Configure > General > Automatically connect when available - __checked__
+      * Configure > IPv6 Settings > Method: __Ignore__
+    * Security policy: __No profile selected (default)__
+    * Click __Begin Installation__
     * Set root password
-    * Create a user named: developer
+    * Create a user named: __developer__
     * Set developer password
-    * Click Reboot once the installation has completed
-    * License information: check the I accept check box and click Finish Configuration
-    * Select Not listed? on the “Login” screen and login as root
-    * Select English on the “Welcome” screen
-    * Select English (US) on the “Typing” screen
-    * Turn location services OFF and click Next
-    * Click Skip on the Connect Accounts screen
-    * Click the Start using CentOS Linux button
+    * Click __Reboot__ once the installation has completed
+    * License information: __check__ the I accept check box and click __Finish Configuration__
+    * Select __Not listed?__ on the “Login” screen and login as __root__
+    * Select __English__ on the “Welcome” screen
+    * Select __English (US)__ on the “Typing” screen
+    * Turn location services __OFF__ and click __Next__
+    * Click __Skip__ on the Connect Accounts screen
+    * Click the __Start using CentOS Linux__ button
 
 # Configure CentOS 7 Firewall
 * Open a new terminal on the VM and execute the following command to see the IPv4 addresses
   * ```ifconfig -a```
-* You can disable the entire firewall by running (not recommended unless you have an additional firewall protecting your network or server)
+* You can disable the entire firewall by running the following commands
+* __NOTE:__ This is not recommended unless you have an additional firewall protecting your network or server
   * ```systemctl stop firewalld```
   * ```systemctl disable firewalld```
 * Check to see if any sources currently exist
   * ```firewall-cmd --permanent --zone=public --list-sources```
-* Add your current subnet range(s) as a source (update IP addresses accordingly)
+* Add your current subnet range(s) as a source 
+* __NOTE:__ Update IP addresses accordingly
   * ```firewall-cmd --permanent --zone=public --add-source=10.0.0.0/24```
   * ```firewall-cmd --permanent --zone=public --add-source=192.168.150.0/24```
 * Add ports 1 through 9999 for TCP and UDP
@@ -111,7 +113,7 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 
 # Transfer Downloaded Software
 * Open a new terminal on the host machine and change directory to where the software in step 2 was downloaded
-* NOTE: Update IP address and filenames accordingly
+* __NOTE:__ Update IP address and filenames accordingly
   * ```scp jdk-8u191-linux-x64.rpm root@192.168.150.53:```
   * ```scp MarkLogic-9.0-7.x86_64.rpm root@192.168.150.53:```
   * ```scp MarkLogicConverters-9.0-7.x86_64.rpm root@192.168.150.53:```
@@ -143,19 +145,20 @@ This repository and documentation is meant to be a comprehensive and detailed tu
 * Start MarkLogic
   * ```service MarkLogic start```
 * Configure MarkLogic
-  * On the host machine, open a new web browser and navigate to: http://192.168.150.53:8001
-  * Server install: Click OK
-  * Join a cluster: Click Skip
+  * On the host machine, open a new web browser and navigate to: __http://192.168.150.53:8001__
+  * __NOTE:__ Update IP address accordingly
+  * Server install: Click __OK__
+  * Join a cluster: Click __Skip__
   * Security setup
-    * Admin: admin
-    * Admin Password: password
-    * Realm: public
-    * Wallet Password: password
-    * Encrypt Security Database: unchecked
-    * Click OK
-  * Enter the admin username/password you defined in the security setup
+    * Admin: __admin__
+    * Admin Password: __password__
+    * Realm: __public__
+    * Wallet Password: __password__
+    * Encrypt Security Database: __unchecked__
+    * Click __OK__
+  * Enter the __admin username/password__ you defined in the security setup and __Login__
 
-# OPTIONAL: Kafka Background and Terminology
+# __OPTIONAL:__ Kafka Background and Terminology
 * Kafka is: a fast, scalable, and distributed publish-subscribe based fault-tolerant messaging system written in Scala and Java
 * Kafka has: excellent throughput, built-in partitioning, replication, and inherent fault-tolerance
 * In a publish-subscribe messaging system such as Kafka, messages produced by “publishers” are persisted in a topic and “subscribers” can subscribe to one or more topics and consume all the messages in the topic(s).
